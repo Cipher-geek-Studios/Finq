@@ -8,7 +8,7 @@ import { logoutUser } from '../../actions/userActions';
 export default class Dashboard extends Component {
   render() {
     return(
-      <div>This is Dashboard Section</div>
+      <div>This is Dashboard Section to load Graphs</div>
     )
   }
 }
