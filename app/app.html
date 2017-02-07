@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Finq - Customised billing app</title>
+    <link rel="stylesheet" href="./semantic-ui-react/semantic.min.global.css" />
+    <script type="text/javascript">
+      window.$ = window.jQuery = require('jquery');
+    </script>
+    <script type="text/javascript" src="./semantic-ui-react/semantic.min.js"></script>
+    <script>
+      var fs = window.FS = require('fs');
+      // var fse = window.FSE =  require('fs-extra');
+      var sql = window.SQL = require('sql.js');
+      if (process.env.NODE_ENV === 'development'){
+        var dbpa = window.dbpa = './app/data/finqdata.sqlite';
+      } else {
+        var dbpa = window.dbpa = './resources/data.bin/finqdata.sqlite';
+      }
+    //Enable when packaging
+      window.dbfs = fs.readFileSync(dbpa);
+      window.db = new sql.Database(dbfs);
+    </script>
+    <script>
+      (function() {
+        if (!process.env.HOT) {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = './dist/style.css';
+          // HACK: Writing the script path should be done with webpack
+          document.getElementsByTagName('head')[0].appendChild(link);
+        }
+      }());
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      {
+        const script = document.createElement('script');
+        const port = process.env.PORT || 3000;
+        script.src = (process.env.HOT)
+          ? 'http://localhost:' + port + '/dist/bundle.js'
+          : './dist/bundle.js';
+        // HACK: Writing the script path should be done with webpack
+        document.body.appendChild(script);
+      }
+    </script>
+  </body>
+</html>
